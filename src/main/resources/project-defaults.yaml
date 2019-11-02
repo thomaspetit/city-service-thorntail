@@ -1,0 +1,32 @@
+thorntail:
+  datasources:
+    data-sources:
+      CityDB:
+        driver-name: h2
+        connection-url: jdbc:h2:mem:jdddb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+        user-name: sa
+        password: sa
+  hibernate:
+    hbm2ddl:
+      auto: create-drop
+    dialect: org.hibernate.dialect.H2Dialect
+  logging:
+    root-logger:
+      level: INFO
+      handlers:
+        - CONSOLE
+    console-handlers:
+      CONSOLE:
+        named-formatter: LOG_FORMATTER
+    pattern-formatters:
+      LOG_FORMATTER:
+        pattern: "%d{HH:mm:ss,SSS} %-5p [%c] (%t) %X{tracing} %s%e%n"
+  jaeger:
+    service-name: city-service
+    reporter-log-spans: true
+    enable-b3-header-propagation: true
+    sampler-type: const
+    sampler-parameter: 1
+  properties:
+    zipcode-service:
+      url:

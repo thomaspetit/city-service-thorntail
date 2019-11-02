@@ -1,0 +1,77 @@
+openapi: 3.0.1
+info:
+  title: ZipCode
+  description: 'Sample service allowing to retrieve the zipcode information'
+  version: 1.0.0
+servers:
+  - url: 'https://{host}:{port}/v1'
+    variables:
+      host:
+        default: localhost
+      port:
+        default: '80'
+tags:
+  - name: zipcode
+
+paths:
+  /zipCodes/{countryCode}/{zipCode}:
+    get:
+      tags:
+        - zipcode
+      summary: Find information for a specific zipcode
+      description: Get detailed zipcode information
+      operationId: getZipCodeInfo
+      parameters:
+        - name: countryCode
+          in: path
+          description: The country code (ISO)
+          required: true
+          schema:
+            type: string
+        - name: zipCode
+          in: path
+          description: The zipcode
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          $ref: "#/components/responses/CityResponse"
+        404:
+          description: Not found
+          content: {}
+components:
+  responses:
+    CityResponse:
+      description: "Returns the country code and the list of found cities"
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/City"
+  schemas:
+    City:
+      type: object
+      properties:
+        post code:
+          type: string
+        country:
+          type: string
+        country abbreviation:
+          type: string
+        places:
+          type: array
+          items:
+            $ref: "#/components/schemas/Place"
+    Place:
+      type: object
+      properties:
+        place name:
+          type: string
+        longitude:
+          type: string
+        state:
+          type: string
+        state abbreviation:
+          type: string
+        latitude:
+          type: string
