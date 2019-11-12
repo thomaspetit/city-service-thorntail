@@ -2,6 +2,8 @@ FROM openjdk:jre-alpine
 
 ENV JAVA_OPTS="-Djava.net.preferIPv4Stack=true -Djava.net.preferIPv4Addresses=true"
 ENV ZIPCODE_SERVICE_URL=""
+ENV JAEGER_HOST=""
+ENV JAEGER_PORT=""
 
 ADD target/*-thorntail.jar /opt/service.jar
 

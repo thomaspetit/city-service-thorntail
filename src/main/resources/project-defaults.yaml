@@ -27,6 +27,9 @@ thorntail:
     enable-b3-header-propagation: true
     sampler-type: const
     sampler-parameter: 1
+    agent:
+      host:
+      port:
   properties:
     zipcode-service:
       url:
