@@ -1,3 +1,4 @@
 .thorntail-runner-cache/
 .idea/
 target/
+.DS_Store
