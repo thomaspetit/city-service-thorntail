@@ -82,7 +82,7 @@ Make sure the artifact is generated first ('mvn install'). For this dockerfile t
 1. Build the image:
    `docker build -t city-service .`
 2. Run the image:
-   `docker run -it -p 8080:8080 -e ZIPCODE_SERVICE_URL="http://localhost:8080" city-service`
+   `docker run -it -m 256m -p 8080:8080 -e ZIPCODE_SERVICE_URL="http://localhost:8080" city-service`
 
 NOTE: As you probably already see by now parameters are not passed dynamically (yet) but we rather use environment variables
 
