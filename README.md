@@ -36,7 +36,7 @@ The runner class will automatically download maven dependencies using a jboss an
 ### Using the 'uberjar'
 Simply run this command from the project root folder:
 ```
-java -Dthorntail.properties.zipcode-service.url=http://localhost:8080 -jar target/cityservice-thorntail.jar
+java -Xmx256M -Dthorntail.properties.zipcode-service.url=http://localhost:8080 -jar target/cityservice-thorntail.jar
 ```
 
 ### Maven
