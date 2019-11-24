@@ -36,7 +36,7 @@ The runner class will automatically download maven dependencies using a jboss an
 ### Using the 'uberjar'
 Simply run this command from the project root folder:
 ```
-java -Dthorntail.properties.zipcode-service.url=http://localhost:8080 -jar target/template-thorntail.jar
+java -Dthorntail.properties.zipcode-service.url=http://localhost:8080 -jar target/cityservice-thorntail.jar
 ```
 
 ### Maven
@@ -80,9 +80,9 @@ We've embedded apiError handling in this service so that the consumer does not g
 Make sure the artifact is generated first ('mvn install'). For this dockerfile the uberjar is used
 
 1. Build the image:
-   `docker build -t template_service .`
+   `docker build -t city-service .`
 2. Run the image:
-   `docker run -it -p 8080:8080 -e ZIPCODE_SERVICE_URL="http://localhost:8080" city_service`
+   `docker run -it -p 8080:8080 -e ZIPCODE_SERVICE_URL="http://localhost:8080" city-service`
 
 NOTE: As you probably already see by now parameters are not passed dynamically (yet) but we rather use environment variables
 
