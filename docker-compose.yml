@@ -1,4 +1,4 @@
-version: "2"
+version: "2.2"
 services:
   jaeger:
     image: jaegertracing/all-in-one:latest
@@ -16,7 +16,7 @@ services:
     restart: unless-stopped
   city-service:
     image: city-service
-    container_name: city_service
+    container_name: city-service
     environment:
       - ZIPCODE_SERVICE_URL=http://localhost:8080
       - JAEGER_HOST=jaeger
@@ -29,6 +29,7 @@ services:
     ports:
       - 8080:8080
     restart: unless-stopped
+    mem_limit: 256M
   prometheus:
     image: prom/prometheus
     container_name: prometheus
