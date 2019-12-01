@@ -19,10 +19,25 @@ public class ArchitectureTests {
     private final String BASE_PACKAGE = this.getClass().getPackage().getName();
 
     @Test
+    public void onion_architecture_layers_are_respected() {
+        JavaClasses importedClasses = new ClassFileImporter()
+                .withImportOption(new ImportOption.DoNotIncludeTests()).importPackages(BASE_PACKAGE);
+        ArchRule rule = layeredArchitecture()
+                .layer("api").definedBy(BASE_PACKAGE + ".api..")
+                .layer("repository").definedBy(BASE_PACKAGE + ".repository..")
+                .layer("service").definedBy(BASE_PACKAGE + ".service..")
+                .layer("adapter").definedBy(BASE_PACKAGE + ".adapter..")
+                .whereLayer("api").mayNotBeAccessedByAnyLayer()
+                .whereLayer("service").mayOnlyBeAccessedByLayers("api", "adapter", "repository")
+                .whereLayer("repository").mayOnlyBeAccessedByLayers("service")
+                .whereLayer("adapter").mayOnlyBeAccessedByLayers("service");
+        rule.check(importedClasses);
+    }
+
+    @Test
     public void adapter_always_returns_completable_futures_for_public_methods() {
         JavaClasses importedClasses = new ClassFileImporter()
-                .withImportOption(new ImportOption.DoNotIncludeTests())
-                .importPackages(BASE_PACKAGE);
+                .withImportOption(new ImportOption.DoNotIncludeTests()).importPackages(BASE_PACKAGE);
         ArchRule rule = methods()
                 .that()
                 .areDeclaredInClassesThat().resideInAPackage(BASE_PACKAGE + ".adapter..")
@@ -35,8 +50,7 @@ public class ArchitectureTests {
     @Test
     public void service_always_returns_streams_for_public_methods() {
         JavaClasses importedClasses = new ClassFileImporter()
-                .withImportOption(new ImportOption.DoNotIncludeTests())
-                .importPackages(BASE_PACKAGE);
+                .withImportOption(new ImportOption.DoNotIncludeTests()).importPackages(BASE_PACKAGE);
         ArchRule rule = methods()
                 .that()
                 .areDeclaredInClassesThat().resideInAPackage(BASE_PACKAGE + ".service..")
